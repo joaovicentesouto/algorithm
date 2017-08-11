@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/joaovicente/code/algorithm/dijkstra/dijkstra_algorithm.cpp
+dijkstra_algorithm.h
+/home/joaovicente/code/algorithm/dijkstra/dijkstra_algorithm.h
+
+/home/joaovicente/code/algorithm/dijkstra/dijkstra_algorithm.h
+lemon/list_graph.h
+-
+

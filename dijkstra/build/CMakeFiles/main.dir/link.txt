@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -lemon   CMakeFiles/main.dir/main.cpp.o  -o main -rdynamic libDijkstraAlgorithm.a 
