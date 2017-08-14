@@ -56,6 +56,17 @@ CMAKE_BINARY_DIR = /home/joaovicente/code/algorithm/dijkstra/build
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -111,17 +122,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named DijkstraAlgorithm
+# Target rules for targets named GraphAlgorithms
 
 # Build rule for target.
-DijkstraAlgorithm: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 DijkstraAlgorithm
-.PHONY : DijkstraAlgorithm
+GraphAlgorithms: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 GraphAlgorithms
+.PHONY : GraphAlgorithms
 
 # fast build rule for target.
-DijkstraAlgorithm/fast:
-	$(MAKE) -f CMakeFiles/DijkstraAlgorithm.dir/build.make CMakeFiles/DijkstraAlgorithm.dir/build
-.PHONY : DijkstraAlgorithm/fast
+GraphAlgorithms/fast:
+	$(MAKE) -f CMakeFiles/GraphAlgorithms.dir/build.make CMakeFiles/GraphAlgorithms.dir/build
+.PHONY : GraphAlgorithms/fast
 
 #=============================================================================
 # Target rules for targets named main
@@ -136,32 +147,32 @@ main/fast:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
-dijkstra_algorithm.o: dijkstra_algorithm.cpp.o
+graph_algorithms.o: graph_algorithms.cpp.o
 
-.PHONY : dijkstra_algorithm.o
+.PHONY : graph_algorithms.o
 
 # target to build an object file
-dijkstra_algorithm.cpp.o:
-	$(MAKE) -f CMakeFiles/DijkstraAlgorithm.dir/build.make CMakeFiles/DijkstraAlgorithm.dir/dijkstra_algorithm.cpp.o
-.PHONY : dijkstra_algorithm.cpp.o
+graph_algorithms.cpp.o:
+	$(MAKE) -f CMakeFiles/GraphAlgorithms.dir/build.make CMakeFiles/GraphAlgorithms.dir/graph_algorithms.cpp.o
+.PHONY : graph_algorithms.cpp.o
 
-dijkstra_algorithm.i: dijkstra_algorithm.cpp.i
+graph_algorithms.i: graph_algorithms.cpp.i
 
-.PHONY : dijkstra_algorithm.i
+.PHONY : graph_algorithms.i
 
 # target to preprocess a source file
-dijkstra_algorithm.cpp.i:
-	$(MAKE) -f CMakeFiles/DijkstraAlgorithm.dir/build.make CMakeFiles/DijkstraAlgorithm.dir/dijkstra_algorithm.cpp.i
-.PHONY : dijkstra_algorithm.cpp.i
+graph_algorithms.cpp.i:
+	$(MAKE) -f CMakeFiles/GraphAlgorithms.dir/build.make CMakeFiles/GraphAlgorithms.dir/graph_algorithms.cpp.i
+.PHONY : graph_algorithms.cpp.i
 
-dijkstra_algorithm.s: dijkstra_algorithm.cpp.s
+graph_algorithms.s: graph_algorithms.cpp.s
 
-.PHONY : dijkstra_algorithm.s
+.PHONY : graph_algorithms.s
 
 # target to generate assembly for a file
-dijkstra_algorithm.cpp.s:
-	$(MAKE) -f CMakeFiles/DijkstraAlgorithm.dir/build.make CMakeFiles/DijkstraAlgorithm.dir/dijkstra_algorithm.cpp.s
-.PHONY : dijkstra_algorithm.cpp.s
+graph_algorithms.cpp.s:
+	$(MAKE) -f CMakeFiles/GraphAlgorithms.dir/build.make CMakeFiles/GraphAlgorithms.dir/graph_algorithms.cpp.s
+.PHONY : graph_algorithms.cpp.s
 
 main.o: main.cpp.o
 
@@ -196,13 +207,14 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... test"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... DijkstraAlgorithm"
+	@echo "... GraphAlgorithms"
 	@echo "... main"
-	@echo "... dijkstra_algorithm.o"
-	@echo "... dijkstra_algorithm.i"
-	@echo "... dijkstra_algorithm.s"
+	@echo "... graph_algorithms.o"
+	@echo "... graph_algorithms.i"
+	@echo "... graph_algorithms.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

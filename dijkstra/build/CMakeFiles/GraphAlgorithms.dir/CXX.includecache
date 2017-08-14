@@ -6,17 +6,13 @@
 
 #IncludeRegexTransform: 
 
+/home/joaovicente/code/algorithm/dijkstra/graph_algorithms.cpp
+graph_algorithms.h
+/home/joaovicente/code/algorithm/dijkstra/graph_algorithms.h
+
 /home/joaovicente/code/algorithm/dijkstra/graph_algorithms.h
 vector
 -
 lemon/list_graph.h
 -
-
-/home/joaovicente/code/algorithm/dijkstra/main.cpp
-iostream
--
-lemon/list_graph.h
--
-graph_algorithms.h
-/home/joaovicente/code/algorithm/dijkstra/graph_algorithms.h
 

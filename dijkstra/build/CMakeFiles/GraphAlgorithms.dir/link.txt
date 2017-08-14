@@ -1,0 +1,2 @@
+/usr/bin/ar qc libGraphAlgorithms.a  CMakeFiles/GraphAlgorithms.dir/graph_algorithms.cpp.o
+/usr/bin/ranlib libGraphAlgorithms.a
