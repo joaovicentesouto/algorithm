@@ -83,8 +83,23 @@ vector<size_t>* GraphAlgorithms::dijkstra(ListGraph::Node& source, ListGraph::No
 
 };
 
+std::vector<std::size_t>* GraphAlgorithms::dijkstra(size_t source, size_t target)
+{
+	if (source > mAmountNodes || target > mAmountNodes)
+	{
+		throw std::out_of_range("Index out of range!");
+	}
+
+	ListGraph::Node s = mGraph.nodeFromId(source);
+	ListGraph::Node t = mGraph.nodeFromId(target);
+
+	return dijkstra(s, t);
+}
+
+
 void GraphAlgorithms::test()
 {
+	cout << "\nTodos os nodes com seus adjacentes:\n";
 	for (ListGraph::NodeIt n(mGraph); n != INVALID; ++n)
 	{
 		for (ListGraph::OutArcIt out(mGraph, n); out != INVALID; ++out)

@@ -13,6 +13,8 @@ public:
 	~GraphAlgorithms();
 
 	std::vector<std::size_t>* dijkstra(ListGraph::Node& source, ListGraph::Node& target);
+	std::vector<std::size_t>* dijkstra(size_t source, size_t target);
+	
 	void test();
 
 private:
