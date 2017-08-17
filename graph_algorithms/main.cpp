@@ -1,6 +1,6 @@
 #include <iostream>
 #include <lemon/list_graph.h>
-#include "graph_algorithms.h"
+#include "./code/graph_algorithms.h"
 
 using namespace lemon;
 using namespace std;

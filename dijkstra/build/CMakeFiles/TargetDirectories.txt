@@ -1,5 +1,0 @@
-/home/joaovicente/code/algorithm/dijkstra/build/CMakeFiles/test.dir
-/home/joaovicente/code/algorithm/dijkstra/build/CMakeFiles/rebuild_cache.dir
-/home/joaovicente/code/algorithm/dijkstra/build/CMakeFiles/edit_cache.dir
-/home/joaovicente/code/algorithm/dijkstra/build/CMakeFiles/GraphAlgorithms.dir
-/home/joaovicente/code/algorithm/dijkstra/build/CMakeFiles/main.dir
