@@ -11,12 +11,12 @@ GraphAlgorithms::GraphAlgorithms(ListGraph& graph, ListGraph::EdgeMap<int>& cost
 	mAmountNodes(n),
 	mAmountEdges(m)
 {
-	cout << "Criado!" << endl;
+        //cout << "Criado!" << endl;
 };
 
 GraphAlgorithms::~GraphAlgorithms()
 {
-	cout << "Destruido!" << endl;
+        //cout << "Destruido!" << endl;
 };
 
 vector<size_t>* GraphAlgorithms::dijkstra(ListGraph::Node& source, ListGraph::Node& target)
@@ -70,7 +70,7 @@ vector<size_t>* GraphAlgorithms::dijkstra(ListGraph::Node& source, ListGraph::No
 	}
 
 	// Achando o caminho
-	vector<size_t>* leastCostPath = new vector<size_t>();
+        vector<size_t>* leastCostPath = new vector<size_t>();
 	current = mGraph.id(target);
 	while (current != mGraph.id(source))
 	{
@@ -97,7 +97,7 @@ std::vector<std::size_t>* GraphAlgorithms::dijkstra(size_t source, size_t target
 }
 
 
-void GraphAlgorithms::test()
+int GraphAlgorithms::test()
 {
 	cout << "\nTodos os nodes com seus adjacentes:\n";
 	for (ListGraph::NodeIt n(mGraph); n != INVALID; ++n)
@@ -109,6 +109,7 @@ void GraphAlgorithms::test()
 			<< " := " << mCost[out] << endl;
 		}
 	}
+        return 1;
 };
 
 }  // namespace routing

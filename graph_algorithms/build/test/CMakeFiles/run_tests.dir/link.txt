@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -lemon   CMakeFiles/run_tests.dir/dijkstra_test.cpp.o CMakeFiles/run_tests.dir/main.cpp.o  -o run_tests -rdynamic 

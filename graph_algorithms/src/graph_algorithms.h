@@ -12,10 +12,10 @@ public:
 	GraphAlgorithms(ListGraph& graph, ListGraph::EdgeMap<int>& cost, size_t n, size_t m);
 	~GraphAlgorithms();
 
-	std::vector<std::size_t>* dijkstra(ListGraph::Node& source, ListGraph::Node& target);
-	std::vector<std::size_t>* dijkstra(size_t source, size_t target);
+        std::vector<std::size_t>* dijkstra(ListGraph::Node& source, ListGraph::Node& target);
+        std::vector<std::size_t>* dijkstra(size_t source, size_t target);
 	
-	void test();
+        int test();
 
 private:
 	ListGraph& mGraph;
