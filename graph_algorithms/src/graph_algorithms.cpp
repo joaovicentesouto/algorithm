@@ -23,19 +23,18 @@ vector<size_t>* GraphAlgorithms::dijkstra(ListGraph::Node& source, ListGraph::No
 {
 	// Inicializacao
         vector<size_t> pathCost(mAmountNodes ,static_cast<size_t>(-1));
-        vector<size_t> parents(mAmountNodes, static_cast<size_t>(-1));
 
         // Tentando
         //ListGraph::NodeMap<size_t> pathCost(mGraph, static_cast<size_t>(-1));
-        //ListGraph::NodeMap<size_t> parents(mGraph, static_cast<size_t>(-1));
 
         // Funcionando
+        ListGraph::NodeMap<size_t> parents(mGraph, static_cast<size_t>(-1));
         ListGraph::NodeMap<bool> closed(mGraph, false);
 
 	pathCost[mGraph.id(source)] = 0;
-	parents[mGraph.id(source)] = mGraph.id(source);
+        parents[source] = mGraph.id(source);
 
-        size_t minimum, current, newPath, adjacent;
+        size_t minimum, current, newPath;
         while (!closed[target])
 	{
 		// Encontra o menor O(n)
@@ -52,21 +51,14 @@ vector<size_t>* GraphAlgorithms::dijkstra(ListGraph::Node& source, ListGraph::No
 		// Fecha vertice O(1)
                 closed[mGraph.nodeFromId(current)] = true;
 
-		// Se fechar o target, sai...
-                if (closed[target])
-		{
-			break;
-		}
-
 		// Atualiza adjacentes O(m/n)
-                for (ListGraph::OutArcIt out(mGraph, mGraph.nodeFromId(current)); out != INVALID; ++out)
-		{
-			adjacent = mGraph.id(mGraph.target(out));
+                for (ListGraph::OutArcIt out(mGraph, mGraph.nodeFromId(current)); out != INVALID && !closed[target]; ++out)
+                {
                         newPath = pathCost[current] + mCost[out];
-                        if (!closed[mGraph.target(out)] && (newPath < pathCost[adjacent]))
+                        if (!closed[mGraph.target(out)] && (newPath < pathCost[mGraph.id(mGraph.target(out))]))
 			{
-				pathCost[adjacent] = newPath;
-                                parents[adjacent] = current;
+                                pathCost[mGraph.id(mGraph.target(out))] = newPath;
+                                parents[mGraph.target(out)] = current;
 			}
 		}
 	}
@@ -77,7 +69,7 @@ vector<size_t>* GraphAlgorithms::dijkstra(ListGraph::Node& source, ListGraph::No
         while (current != mGraph.id(source))
 	{
                 leastCostPath->push_back(current);
-                current = parents[current];
+                current = parents[mGraph.nodeFromId(current)];
 	}
         leastCostPath->push_back(current);
 
