@@ -22,62 +22,64 @@ GraphAlgorithms::~GraphAlgorithms()
 vector<size_t>* GraphAlgorithms::dijkstra(ListGraph::Node& source, ListGraph::Node& target)
 {
 	// Inicializacao
-	vector<size_t> pathCost(mAmountNodes);
-	vector<size_t> parents(mAmountNodes);
-	vector<bool> closed(mAmountNodes);
+        vector<size_t> pathCost(mAmountNodes ,static_cast<size_t>(-1));
+        vector<size_t> parents(mAmountNodes, static_cast<size_t>(-1));
 
-	fill(pathCost.begin(), pathCost.end(), static_cast<size_t>(-1));
-	fill(parents.begin(), parents.end(), static_cast<size_t>(-1));
-	fill(closed.begin(), closed.end(), false);
+        // Tentando
+        //ListGraph::NodeMap<size_t> pathCost(mGraph, static_cast<size_t>(-1));
+        //ListGraph::NodeMap<size_t> parents(mGraph, static_cast<size_t>(-1));
+
+        // Funcionando
+        ListGraph::NodeMap<bool> closed(mGraph, false);
 
 	pathCost[mGraph.id(source)] = 0;
 	parents[mGraph.id(source)] = mGraph.id(source);
 
-	size_t minimum, current, newPath, adjacent;
-	while (!closed[mGraph.id(target)])
+        size_t minimum, current, newPath, adjacent;
+        while (!closed[target])
 	{
 		// Encontra o menor O(n)
-		minimum = current = static_cast<size_t>(-1);
+                minimum = current = static_cast<size_t>(-1);
 		for (auto i = 0; i < mAmountNodes; ++i)
 		{
-			if (!closed[i] && pathCost[i] < minimum)
+                        if (!closed[mGraph.nodeFromId(i)] && pathCost[i] < minimum)
 			{
-				current = i;
+                                current = i;
 				minimum = pathCost[i];
 			}
 		}
 
 		// Fecha vertice O(1)
-		closed[current] = true;
+                closed[mGraph.nodeFromId(current)] = true;
 
 		// Se fechar o target, sai...
-		if (closed[mGraph.id(target)])
+                if (closed[target])
 		{
 			break;
 		}
 
 		// Atualiza adjacentes O(m/n)
-		for (ListGraph::OutArcIt out(mGraph, mGraph.nodeFromId(current)); out != INVALID; ++out)
+                for (ListGraph::OutArcIt out(mGraph, mGraph.nodeFromId(current)); out != INVALID; ++out)
 		{
 			adjacent = mGraph.id(mGraph.target(out));
-			newPath = pathCost[current] + mCost[out];
-			if (!closed[mGraph.id(mGraph.target(out))] && (newPath < pathCost[adjacent]))
+                        newPath = pathCost[current] + mCost[out];
+                        if (!closed[mGraph.target(out)] && (newPath < pathCost[adjacent]))
 			{
 				pathCost[adjacent] = newPath;
-				parents[adjacent] = current;
+                                parents[adjacent] = current;
 			}
 		}
 	}
 
 	// Achando o caminho
         vector<size_t>* leastCostPath = new vector<size_t>();
-	current = mGraph.id(target);
-	while (current != mGraph.id(source))
+        current = mGraph.id(target);
+        while (current != mGraph.id(source))
 	{
-		leastCostPath->push_back(current);
-		current = parents[current];
+                leastCostPath->push_back(current);
+                current = parents[current];
 	}
-	leastCostPath->push_back(current);
+        leastCostPath->push_back(current);
 
 	return leastCostPath;
 
