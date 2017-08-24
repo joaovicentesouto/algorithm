@@ -1,3 +1,6 @@
+#ifndef ROUTING_GRAPH_ALGORITHMS_CPP
+#define ROUTING_GRAPH_ALGORITHMS_CPP
+
 #include "./graph_algorithms.h"
 
 using namespace lemon;
@@ -5,81 +8,76 @@ using namespace std;
 
 namespace routing {
 
-GraphAlgorithms::GraphAlgorithms(ListGraph& graph, ListGraph::EdgeMap<int>& cost, size_t n, size_t m) :
+GraphAlgorithms::GraphAlgorithms(ListGraph& graph, ListGraph::EdgeMap<size_t>& cost, size_t n, size_t m) :
 	mGraph(graph),
 	mCost(cost),
-	mAmountNodes(n),
-	mAmountEdges(m)
+        mNodesAmount(n),
+        mEdgesAmount(m)
 {
-        //cout << "Criado!" << endl;
+
 };
 
 GraphAlgorithms::~GraphAlgorithms()
 {
-        //cout << "Destruido!" << endl;
+
 };
 
 vector<size_t>* GraphAlgorithms::dijkstra(ListGraph::Node& source, ListGraph::Node& target)
 {
-	// Inicializacao
-        vector<size_t> pathCost(mAmountNodes ,static_cast<size_t>(-1));
+        // Inicializacao
+        vector<size_t>* minimumCostPath = new vector<size_t>();
 
-        // Tentando
-        //ListGraph::NodeMap<size_t> pathCost(mGraph, static_cast<size_t>(-1));
-
-        // Funcionando
+        ListGraph::NodeMap<size_t> pathCost(mGraph, static_cast<size_t>(-1));
         ListGraph::NodeMap<size_t> parents(mGraph, static_cast<size_t>(-1));
         ListGraph::NodeMap<bool> closed(mGraph, false);
 
-	pathCost[mGraph.id(source)] = 0;
+        pathCost[source] = 0;
         parents[source] = mGraph.id(source);
 
-        size_t minimum, current, newPath;
+        size_t minimum, newPath;
+        ListGraph::Node current;
+
         while (!closed[target])
 	{
-		// Encontra o menor O(n)
-                minimum = current = static_cast<size_t>(-1);
-		for (auto i = 0; i < mAmountNodes; ++i)
-		{
-                        if (!closed[mGraph.nodeFromId(i)] && pathCost[i] < minimum)
-			{
-                                current = i;
-				minimum = pathCost[i];
-			}
-		}
-
-		// Fecha vertice O(1)
-                closed[mGraph.nodeFromId(current)] = true;
-
-		// Atualiza adjacentes O(m/n)
-                for (ListGraph::OutArcIt out(mGraph, mGraph.nodeFromId(current)); out != INVALID && !closed[target]; ++out)
+                minimum = static_cast<size_t>(-1);
+                for (ListGraph::NodeIt it(mGraph); it != INVALID; ++it)
                 {
-                        newPath = pathCost[current] + mCost[out];
-                        if (!closed[mGraph.target(out)] && (newPath < pathCost[mGraph.id(mGraph.target(out))]))
-			{
-                                pathCost[mGraph.id(mGraph.target(out))] = newPath;
-                                parents[mGraph.target(out)] = current;
-			}
-		}
+                    if (!closed[it] && pathCost[it] < minimum)
+                    {
+                        current = it;
+                        minimum = pathCost[it];
+                    }
+                }
+
+                closed[current] = true;
+
+                for (ListGraph::OutArcIt out(mGraph, current); out != INVALID && !closed[target]; ++out)
+                {
+                    newPath = pathCost[current] + mCost[out];
+                    if (!closed[mGraph.target(out)] && (newPath < pathCost[mGraph.target(out)]))
+                    {
+                            pathCost[mGraph.target(out)] = newPath;
+                            parents[mGraph.target(out)] = mGraph.id(current);
+                    }
+                }
 	}
 
 	// Achando o caminho
-        vector<size_t>* leastCostPath = new vector<size_t>();
-        current = mGraph.id(target);
-        while (current != mGraph.id(source))
+        current = target;
+        while (current != source)
 	{
-                leastCostPath->push_back(current);
-                current = parents[mGraph.nodeFromId(current)];
+                minimumCostPath->push_back(mGraph.id(current));
+                current = mGraph.nodeFromId(parents[current]);
 	}
-        leastCostPath->push_back(current);
+        minimumCostPath->push_back(mGraph.id(current));
 
-	return leastCostPath;
+        return minimumCostPath;
 
 };
 
 std::vector<std::size_t>* GraphAlgorithms::dijkstra(size_t source, size_t target)
 {
-	if (source > mAmountNodes || target > mAmountNodes)
+        if (source > mNodesAmount || target > mNodesAmount)
 	{
 		throw std::out_of_range("Index out of range!");
 	}
@@ -107,3 +105,5 @@ int GraphAlgorithms::test()
 };
 
 }  // namespace routing
+
+#endif
