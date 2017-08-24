@@ -24,8 +24,9 @@ GraphAlgorithms::~GraphAlgorithms()
 
 vector<size_t>* GraphAlgorithms::dijkstra(ListGraph::Node& source, ListGraph::Node& target)
 {
-        // Inicializacao
         vector<size_t>* minimumCostPath = new vector<size_t>();
+        size_t minimum, newPath;
+        ListGraph::Node current;
 
         ListGraph::NodeMap<size_t> pathCost(mGraph, static_cast<size_t>(-1));
         ListGraph::NodeMap<size_t> parents(mGraph, static_cast<size_t>(-1));
@@ -33,9 +34,6 @@ vector<size_t>* GraphAlgorithms::dijkstra(ListGraph::Node& source, ListGraph::No
 
         pathCost[source] = 0;
         parents[source] = mGraph.id(source);
-
-        size_t minimum, newPath;
-        ListGraph::Node current;
 
         while (!closed[target])
 	{
@@ -62,7 +60,6 @@ vector<size_t>* GraphAlgorithms::dijkstra(ListGraph::Node& source, ListGraph::No
                 }
 	}
 
-	// Achando o caminho
         current = target;
         while (current != source)
 	{
